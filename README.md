@@ -18,6 +18,7 @@ With a file named “heyho.Rmd”:
 ``` r
 writeMDX("heyho.Rmd")
 ```
+This will go in the same folder as the source file. 
 
 ## Why?? :confused:
 
