@@ -2,7 +2,7 @@
 #' @title writeMDX
 #' @description write and Rmarkdown (.Rmd) file to MDX (.mdx) format.
 #' @param input Input file (.Rmd format).
-#' @example
+#' @examples
 #' \dontrun{
 #' # supposing you have a 'test.Rmd' file:
 #' writeMDX("test.Rmd")

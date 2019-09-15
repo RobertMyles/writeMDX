@@ -10,3 +10,4 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Imports: rmarkdown (>= 1.12),
+    docopt (>= 0.6.1)

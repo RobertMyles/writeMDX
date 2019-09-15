@@ -28,6 +28,13 @@ With a file named "heyho.Rmd":
 writeMDX("heyho.Rmd")
 ```
 
+If you'd like to use it from the command line, first run `writeMDX::cli()`. Then it's just:
+
+```{bash eval = FALSE}
+writeMDX "heyho.Rmd"
+```
+
+
 ## Why?? :confused:
 
 I love [React](https://reactjs.org/), and I just rebuilt my [website](https://www.robertmylesmcdonnell.com/) using [gatsby.js](https://www.gatsbyjs.org/), so now I want all the ease and power of MDX. The only missing piece of the puzzle was doing some stuff in R, and then writing it out to an `.mdx` file that I can use to add in all the other stuff I want, like D3 graphs. R + React + Markdown = :purple_heart: 

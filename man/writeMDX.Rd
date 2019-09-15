@@ -12,3 +12,9 @@ writeMDX(input)
 \description{
 write and Rmarkdown (.Rmd) file to MDX (.mdx) format.
 }
+\examples{
+\dontrun{
+# supposing you have a 'test.Rmd' file:
+writeMDX("test.Rmd")
+}
+}
