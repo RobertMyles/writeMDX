@@ -4,10 +4,13 @@
 \alias{writeMDX}
 \title{writeMDX}
 \usage{
-writeMDX(input)
+writeMDX(input, config = list("date", "title", "featuredImage"))
 }
 \arguments{
 \item{input}{Input file (.Rmd format).}
+
+\item{config}{\code{list}. Configurable YAML fields to check for. Default is
+config = list("date", "title", "featuredImage")}
 }
 \description{
 write and Rmarkdown (.Rmd) file to MDX (.mdx) format.
