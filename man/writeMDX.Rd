@@ -4,7 +4,11 @@
 \alias{writeMDX}
 \title{writeMDX}
 \usage{
-writeMDX(input, config = list("date", "title", "featuredImage"))
+writeMDX(
+  input,
+  config = list(include = list("date", "title", "featuredImage"), exclude =
+    list("author", "output"))
+)
 }
 \arguments{
 \item{input}{Input file (.Rmd format).}

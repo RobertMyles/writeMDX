@@ -25,7 +25,11 @@ run <- function() {
     if(opts$help){
       message(doc)
     } else{
-      writeMDX(input = opts$input)
+      writeMDX(input = opts$input,
+               config = list(
+                 include = list("date", "title", "featuredImage"),
+                 exclude = list("author", "output")
+               ))
     }
   }, error=function(err) {
     msg <- conditionMessage(err)

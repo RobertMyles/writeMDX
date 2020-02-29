@@ -31,8 +31,142 @@ writeMDX("heyho.Rmd")
 If you'd like to use it from the command line, first run `writeMDX::cli()`. Then it's just:
 
 ```{bash eval = FALSE}
-writeMDX "heyho.Rmd"
+writeMDX heyho.Rmd
 ```
+
+
+writeMDX has a few defaults that are set up for me, but you can easily change them. The `config` argument accepts a list of two named lists: `inlcude` and `exclude`. These are the fields you'd like to remove, or for which you want to check for inclusion on the YAML header. The command line version isn't set up to take anything other than the defaults yet.  
+
+## Example
+
+I use this for my blog, for example [here](https://www.robertmylesmcdonnell.com/content/posts/UKelections2019/). 
+
+
+My workflow for my website is usually: 
+
+- Open up new Rmarkdown document in RStudio;
+- Write something kewlz about R;
+- Do some repetitive boring stuff to get it into a suitable format for rendering with [Gatsby.js](https://www.gatsbyjs.org/).  
+
+writeMDX helps with that last part. Let's say we open up a new .Rmd in RStudio, it will look like this in the YAML header (unless you use a template or some other format): 
+
+```
+---
+title: "MDXtest"
+author: "Robert McDonnell"
+date: "2/29/2020"
+output: html_document
+featuredImage: "image/png.png"
+---
+```
+Well, it probably won't say `"Robert McDonnell"`, but you get the idea. `featuredImage` I put in. 
+
+So that's all fine, but the MDX that I use to include React on my Gatsby-powered blog has this YAML header:
+
+```
+---
+title: "MDXtest
+date: "2020-02-29"
+featuredImage: "images/some_image.png"
+---
+```
+
+Changing this manually every time I want to blog about something gets pretty old pretty quickly. So I use writeMDX, which will convert the former to the latter. It also creates a proper MDX document that follows pandoc's [markdown](https://pandoc.org/MANUAL.html#pandocs-markdown) spec. So a full RMarkdown might be this (ignore the `#` at the code chunks, just for formatting the README correctly): 
+
+```
+---
+title: "MDXtest"
+author: "Robert McDonnell"
+date: "2/29/2020"
+output: html_document
+featuredImage: "image/png.png"
+---
+
+#```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#```
+
+## writeMDX test
+
+This is a test document for writeMDX. It has **bold**, *italic*  
+
+- lists 
+  - sublists
+- and so on
+
+It also has equations $y_{ij} = \alpha_j * beta_i$
+
+$$y_{ij} = \alpha_j * beta_i$$
+
+And it has code. For R:
+#```{r}
+x <- 5
+print(x)
+
+print(head(mtcars))
+#```
+
+And Python: 
+#```{python}
+x = 3
+print(x)
+#```
+```
+
+And the MDX resulting from writeMDX will be: 
+
+```
+---
+title: "MDXtest"
+date: '2020-02-29'
+featuredImage: "image/png.png"
+---
+
+writeMDX test
+-------------
+
+This is a test document for writeMDX. It has **bold**, *italic*
+
+-   lists
+    -   sublists
+-   and so on
+
+It also has equations $y_{ij} = \alpha_j * beta_i$
+
+$$y_{ij} = \alpha_j * beta_i$$
+
+And it has code. For R:
+
+#``` {.r}
+x <- 5
+print(x)
+#```
+
+    ## [1] 5
+
+#``` {.r}
+print(head(mtcars))
+#```
+
+    ##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+    ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+    ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+    ## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+    ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+    ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+    ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+And Python:
+
+#``` {.python}
+x = 3
+print(x)
+#```
+
+    ## 3
+```
+
+It's not perfect, as you can see. The indentations could be removed, emojis work differently, and equations need a different set up. These are on my [to-do list](https://github.com/RobertMyles/writeMDX/projects/1); they may or may not get done. If you'd like to make a PR for any of these, feel free. 
 
 
 ## Why?? :confused:
@@ -42,3 +176,4 @@ I love [React](https://reactjs.org/), and I just rebuilt my [website](https://ww
 ## No CRAN? :cry:
 
 This won't go on CRAN, since it's mainly [rmarkdown package](https://rmarkdown.rstudio.com/) functions with an added format, which you can do yourself [quite easily](https://bookdown.org/yihui/rmarkdown/format-custom.html).
+
