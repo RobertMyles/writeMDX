@@ -17,10 +17,9 @@ mdx_format <- function(variant = "markdown", preserve_yaml = TRUE,
 
         for (i in 1:length(cfig)) {
           param <- yaml_fields[[i]]
-          present <- grepl(yaml_fields[[i]], yaml_headers[[i]])
-          if (!present) {
-            stop(paste0("Config item '", param, "' is missing from YAML."))
-          } else if (param == "date") {
+          present <- which(grepl(param, yaml_headers))
+          if (length(present) > 1) stop("There are duplicate YAML header entries.")
+          if (length(present == 1) & param == "date") {
             date_string <- strex::str_after_first(yaml_headers[[i]], "date: ")
             date_string <- gsub(x = date_string, pattern = '"', replacement = "")
             first <- strex::str_before_first(date_string, "/")
@@ -34,7 +33,8 @@ mdx_format <- function(variant = "markdown", preserve_yaml = TRUE,
             date_position <- which(grepl("date", partitioned$front_matter))
             yaml_date_out <- paste0("date: '", date_out, "'")
             partitioned$front_matter[date_position] <- yaml_date_out
-
+          } else if (length(present) < 1) {
+            stop(paste0("Config item '", param, "' is missing from YAML."))
           }
         }
         if (length(yaml_headers) > length(yaml_fields)) {
